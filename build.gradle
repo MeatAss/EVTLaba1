@@ -1,0 +1,94 @@
+buildscript {
+    ext {
+        dependencyManagementVersion = "1.0.8.RELEASE"
+        kotlinVersion = "1.3.61"
+        kotlinLoggingVersion = "1.7.8"
+        springBootVersion = "2.2.2.RELEASE"
+        tornadoVersion = "1.7.20"
+        kotlinJdbcVersion = "0.5.0"
+        jschVersion = "0.1.55"
+        commonsVersion = "3.9"
+        javafxPluginVersion = "0.0.8"
+        httpClientVersion = "4.5.10"
+        javers_version = "3.7.9"
+    }
+    repositories {
+        mavenCentral()
+        maven {
+            url "https://plugins.gradle.org/m2/"
+        }
+    }
+    dependencies {
+        classpath "io.spring.gradle:dependency-management-plugin:$dependencyManagementVersion"
+        classpath "org.springframework.boot:spring-boot-gradle-plugin:$springBootVersion"
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion"
+        classpath "org.jetbrains.kotlin:kotlin-allopen:$kotlinVersion"
+        classpath "org.openjfx:javafx-plugin:$javafxPluginVersion"
+    }
+}
+
+apply plugin: "kotlin"
+apply plugin: "application"
+apply plugin: "kotlin-spring"
+apply plugin: "org.openjfx.javafxplugin"
+apply plugin: "org.springframework.boot"
+apply plugin: "io.spring.dependency-management"
+
+mainClassName = "laba1.Laba1"
+sourceCompatibility = JavaVersion.VERSION_11
+compileKotlin {
+    kotlinOptions.jvmTarget = JavaVersion.VERSION_11.toString()
+}
+compileTestKotlin {
+    kotlinOptions.jvmTarget = JavaVersion.VERSION_11.toString()
+}
+
+repositories {
+    mavenCentral()
+    jcenter()
+}
+
+dependencyManagement {
+    imports {
+        mavenBom "org.springframework.boot:spring-boot-dependencies:$springBootVersion"
+    }
+}
+
+dependencies {
+    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion"
+    implementation "org.jetbrains.kotlin:kotlin-reflect:$kotlinVersion"
+    implementation "org.apache.httpcomponents:httpclient:$httpClientVersion"
+    implementation "org.springframework.boot:spring-boot-starter-web"
+    implementation "org.springframework.security:spring-security-messaging"
+    implementation "org.springframework.boot:spring-boot-starter-security"
+
+    implementation "com.vladsch.kotlin-jdbc:kotlin-jdbc:$kotlinJdbcVersion"
+    implementation "org.postgresql:postgresql"
+
+    implementation "org.javers:javers-spring-jpa:$javers_version"
+
+    implementation "io.github.microutils:kotlin-logging:$kotlinLoggingVersion"
+    implementation "org.apache.commons:commons-lang3:$commonsVersion"
+    implementation "com.jcraft:jsch:$jschVersion"
+
+    implementation "no.tornado:tornadofx:$tornadoVersion"
+
+    implementation "org.springframework.boot:spring-boot-starter"
+}
+
+configurations {
+    compile.exclude module: "spring-boot-starter-tomcat"
+}
+
+task gradleWrapper(type: Wrapper) {
+    gradleVersion = "6.0.1"
+    distributionUrl = "https://services.gradle.org/distributions/gradle-${gradleVersion}-bin.zip"
+}
+
+jar {
+    baseName = "laba"
+}
+
+springBoot {
+    buildInfo()
+}
