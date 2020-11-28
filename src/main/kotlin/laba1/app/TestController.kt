@@ -1,4 +1,4 @@
-package laba1
+package laba1.app
 
 import org.springframework.security.access.prepost.PreAuthorize
 import org.springframework.web.bind.annotation.GetMapping

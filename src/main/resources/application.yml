@@ -5,3 +5,5 @@ spring:
     user:
       name: meat
       password: ass
+server:
+  port: 8081

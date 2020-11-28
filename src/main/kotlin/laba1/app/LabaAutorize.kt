@@ -1,4 +1,4 @@
-package laba1
+package laba1.app
 
 import org.springframework.stereotype.Component
 
